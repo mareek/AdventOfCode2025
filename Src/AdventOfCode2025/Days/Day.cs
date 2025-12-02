@@ -3,6 +3,9 @@
 internal abstract class Day
 {
     public required bool Real { get; init; }
+
+    public bool Slow { get; init; } = false;
+
     public abstract int DayDate { get; }
 
     public abstract string ExecuteFirst();

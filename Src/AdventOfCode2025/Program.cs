@@ -1,4 +1,5 @@
-﻿using AdventOfCode2025.Days;
+﻿using System.Diagnostics;
+using AdventOfCode2025.Days;
 
 const bool Real = true;
 
@@ -10,5 +11,20 @@ Day[] days =
 
 foreach (var day in days)
 {
-    Console.WriteLine($"Day {day.DayDate} : {day.ExecuteFirst()} | {day.ExecuteSecond()}");
+    if (day.Slow)
+        Console.WriteLine($"Day {day.DayDate} : Too slow");
+    else
+    {
+        var chrono = Stopwatch.StartNew();
+        var firstResponse = day.ExecuteFirst();
+        chrono.Stop();
+        var firstDuration = chrono.ElapsedMilliseconds;
+
+        chrono = Stopwatch.StartNew();
+        var secondResponse = day.ExecuteSecond();
+        chrono.Stop();
+        var secondDuration = chrono.ElapsedMilliseconds;
+
+        Console.WriteLine($"Day {day.DayDate} : {firstResponse} ({firstDuration:#0} ms) | {secondResponse} ({secondDuration:#0} ms)");
+    }
 }
