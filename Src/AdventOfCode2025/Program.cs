@@ -5,6 +5,7 @@ const bool Real = true;
 Day[] days =
     [
     new Day1() { Real = Real },
+    new Day2() { Real = Real },
     ];
 
 foreach (var day in days)
