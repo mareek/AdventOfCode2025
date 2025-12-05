@@ -1,15 +1,14 @@
 ﻿namespace AdventOfCode2025.Days;
 
-internal class Day1 : Day
+internal class Day1(bool real) : Day(real)
 {
     public override int DayDate => 1;
 
     public override string ExecuteFirst()
     {
-        var lines = ReadLines();
         int position = 50;
         int zeroCOunt = 0;
-        foreach (var line in lines.Where(l => !string.IsNullOrWhiteSpace(l)))
+        foreach (var line in Lines.Where(l => !string.IsNullOrWhiteSpace(l)))
         {
             var sign = line[0] == 'L' ? -1 : 1;
             var clicks = int.Parse(line[1..]);
@@ -24,10 +23,9 @@ internal class Day1 : Day
 
     public override string ExecuteSecond()
     {
-        var lines = ReadLines();
         int position = 50;
         int zeroCount = 0;
-        foreach (var line in lines.Where(l => !string.IsNullOrWhiteSpace(l)))
+        foreach (var line in Lines.Where(l => !string.IsNullOrWhiteSpace(l)))
         {
             var sign = line[0] == 'L' ? -1 : 1;
             var clicks = int.Parse(line[1..]);

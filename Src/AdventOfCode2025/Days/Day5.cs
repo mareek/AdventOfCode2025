@@ -2,17 +2,16 @@
 
 namespace AdventOfCode2025.Days;
 
-internal class Day5 : Day
+internal class Day5(bool real) : Day(real)
 {
     public override int DayDate => 5;
 
     public override string ExecuteFirst()
     {
-        var lines = ReadLines();
-        var ranges = lines.TakeWhile(l => !string.IsNullOrEmpty(l))
+        var ranges = Lines.TakeWhile(l => !string.IsNullOrEmpty(l))
                           .Select(Range.Parse)
                           .ToArray();
-        var ingredients = lines.Skip(ranges.Length + 1)
+        var ingredients = Lines.Skip(ranges.Length + 1)
                                .Select(long.Parse)
                                .ToArray();
 
@@ -28,9 +27,9 @@ internal class Day5 : Day
 
     public override string ExecuteSecond()
     {
-        var ranges = ReadLines().TakeWhile(l => !string.IsNullOrEmpty(l))
-                                .Select(Range.Parse)
-                                .ToList();
+        var ranges = Lines.TakeWhile(l => !string.IsNullOrEmpty(l))
+                          .Select(Range.Parse)
+                          .ToList();
         bool hasMerged;
         do
         {
@@ -39,7 +38,7 @@ internal class Day5 : Day
             {
                 var range = ranges[i];
                 int j = i + 1;
-                while(j < ranges.Count)
+                while (j < ranges.Count)
                 {
                     if (!range.TryMerge(ranges[j], out var merged))
                         j++;

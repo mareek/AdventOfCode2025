@@ -5,11 +5,11 @@ const bool Real = true;
 
 Day[] days =
     [
-    new Day1() { Real = Real },
-    new Day2() { Real = Real },
-    new Day3() { Real = Real },
-    new Day4() { Real = Real },
-    new Day5() { Real = Real },
+    new Day1(Real),
+    new Day2(Real),
+    new Day3(Real),
+    new Day4(Real),
+    new Day5(Real),
     ];
 
 foreach (var day in days)
@@ -18,6 +18,9 @@ foreach (var day in days)
         Console.WriteLine($"Day {day.DayDate} : Too slow");
     else
     {
+        //Warmup
+        _ = day.Lines;
+
         var chrono = Stopwatch.StartNew();
         var firstResponse = day.ExecuteFirst();
         chrono.Stop();

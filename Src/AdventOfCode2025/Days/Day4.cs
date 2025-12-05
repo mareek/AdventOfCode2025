@@ -1,12 +1,12 @@
 ﻿namespace AdventOfCode2025.Days;
 
-internal class Day4 : Day
+internal class Day4(bool real) : Day(real)
 {
     public override int DayDate => 4;
 
     public override string ExecuteFirst()
     {
-        var input = ReadLines().Select(s => s.ToCharArray()).ToArray();
+        var input = Lines.Select(s => s.ToCharArray()).ToArray();
 
         int count = 0;
         for (int y = 0; y < input.Length; y++)
@@ -24,7 +24,7 @@ internal class Day4 : Day
 
     public override string ExecuteSecond()
     {
-        var input = ReadLines().Select(s => s.ToCharArray()).ToArray();
+        var input = Lines.Select(s => s.ToCharArray()).ToArray();
 
         int totalCount = 0;
         int currentCount;

@@ -1,13 +1,13 @@
 ﻿namespace AdventOfCode2025.Days;
 
-internal class Day2 : Day
+internal class Day2(bool real) : Day(real)
 {
     public override int DayDate => 2;
 
     public override string ExecuteFirst()
     {
         long response = 0;
-        var input = base.ReadLines()[0];
+        var input = Lines[0];
         var ranges = input.Split(',');
         foreach (var range in ranges)
         {
@@ -44,7 +44,7 @@ internal class Day2 : Day
     public override string ExecuteSecond()
     {
 
-        var input = ReadLines()[0];
+        var input = Lines[0];
         var ranges = input.Split(',');
 
         List<long> invalidIds = [];

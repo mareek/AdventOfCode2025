@@ -1,14 +1,13 @@
 namespace AdventOfCode2025.Days;
 
-internal class Day3 : Day
+internal class Day3(bool real) : Day(real)
 {
     public override int DayDate => 3;
 
     public override string ExecuteFirst()
     {
         int response = 0;
-        var input = ReadLines();
-        foreach (var line in input)
+        foreach (var line in Lines)
         {
             int firstDigitPos = -1;
             int firstDigit = 0;
@@ -42,8 +41,7 @@ internal class Day3 : Day
     public override string ExecuteSecond()
     {
         long response = 0;
-        var input = ReadLines();
-        foreach (var line in input)
+        foreach (var line in Lines)
         {
             int[] digits = new int[12];
 
