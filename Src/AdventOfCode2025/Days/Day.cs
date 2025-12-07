@@ -8,13 +8,13 @@ internal abstract class Day
         _lazyLines = new(() => ReadLines(real, DayDate));
     }
 
-    private readonly Lazy<string[]> _lazyLines;
-
-    public string[] Lines => _lazyLines.Value;
-
     public bool Real { get; }
 
     public bool Slow { get; init; } = false;
+
+
+    private readonly Lazy<string[]> _lazyLines;
+    public string[] Lines => _lazyLines.Value;
 
     public abstract int DayDate { get; }
 
@@ -28,4 +28,7 @@ internal abstract class Day
         var filePath = $"{inputDir}\\{day}.txt";
         return File.ReadAllLines(filePath);
     }
+
+    public char[][] GetCharMatrix()
+        => Lines.Select(l => l.ToCharArray()).ToArray();
 }
