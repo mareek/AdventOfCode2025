@@ -12,6 +12,7 @@ Day[] days =
     new Day5(Real),
     new Day6(Real),
     new Day7(Real),
+    new Day8(Real),
     ];
 
 foreach (var day in days)
