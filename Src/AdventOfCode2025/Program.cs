@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using AdventOfCode2025.Days;
 
-const bool Real = true;
+const bool Real = false;
 
 Day[] days =
     [
@@ -12,7 +12,8 @@ Day[] days =
     new Day5(Real),
     new Day6(Real),
     new Day7(Real),
-    new Day8(Real),
+    new Day8(Real) { Slow = true },
+    new Day9(Real),
     ];
 
 foreach (var day in days)

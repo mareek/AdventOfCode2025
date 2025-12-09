@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO.Pipes;
-using System.Text;
-
-namespace AdventOfCode2025.Days;
+﻿namespace AdventOfCode2025.Days;
 
 internal class Day8(bool real) : Day(real)
 {
