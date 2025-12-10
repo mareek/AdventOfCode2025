@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using AdventOfCode2025.Days;
 
-const bool Real = true;
+const bool Real = false;
 
 Day[] days =
     [
@@ -14,12 +14,13 @@ Day[] days =
     new Day7(Real),
     new Day8(Real) { Slow = true },
     new Day9(Real),
+    new Day10(Real),
     ];
 
 foreach (var day in days)
 {
     if (day.Slow)
-        Console.WriteLine($"Day {day.DayDate} : Too slow");
+        Console.WriteLine($"Day {day.DayDate:00} : Too slow");
     else
     {
         //Warmup
@@ -35,6 +36,6 @@ foreach (var day in days)
         chrono.Stop();
         var secondDuration = chrono.ElapsedMilliseconds;
 
-        Console.WriteLine($"Day {day.DayDate} : {firstResponse} ({firstDuration:#0} ms) | {secondResponse} ({secondDuration:#0} ms)");
+        Console.WriteLine($"Day {day.DayDate:00} : {firstResponse} ({firstDuration:#0} ms) | {secondResponse} ({secondDuration:#0} ms)");
     }
 }
