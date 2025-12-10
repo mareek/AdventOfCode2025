@@ -15,73 +15,38 @@ internal class Day9(bool real) : Day(real)
     public override string ExecuteSecond()
     {
         Tile[] tiles = Lines.Select(Tile.Parse).ToArray();
-        var rectanglesBySize = GetRectangles(tiles, true).OrderByDescending(r => r.Area).ToArray();
-
-        foreach (var rectangle in rectanglesBySize)
+        List<Line> lines = [];
+        for (int i = 0; i < tiles.Length; i++)
         {
-            if (IsValid(rectangle))
-                return rectangle.Area.ToString();
+            var tile = tiles[i];
+            var nextTile = tiles[(i + 1) % tiles.Length];
+            lines.Add(new(tile, nextTile));
         }
 
-        throw new Exception("Here be dragons");
+        var biggestRectangle = GetRectangles(tiles).OrderByDescending(r => r.Area)
+                                                   .First(IsValid);
+        return biggestRectangle.Area.ToString();
 
         bool IsValid(Rectangle rectangle)
         {
-            if (tiles.Any(rectangle.Contains))
+            if (lines.Any(rectangle.Intersect))
                 return false;
 
             return true;
         }
     }
 
-    private static IEnumerable<Rectangle> GetRectangles(Tile[] tiles, bool checkValidity = false)
+    private static IEnumerable<Rectangle> GetRectangles(Tile[] tiles)
     {
         for (int i = 0; i < tiles.Length; i++)
             for (int j = i + 1; j < tiles.Length; j++)
-            {
-                var corner1 = tiles[i];
-                var corner2 = tiles[j];
-                Rectangle rectangle = new(corner1, corner2);
-                if (!checkValidity)
-                {
-                    yield return rectangle;
-                    continue;
-                }
-
-                // C'est un peu n'importe quoi
-                var corner1Positions = corner1.GetRelativePosition(corner2).ToArray();
-                var corner1IsOk = corner1Positions.Contains(corner1.GetRelativePosition(GetPreviousTile(i)).Single())
-                                  && corner1Positions.Contains(corner1.GetRelativePosition(GetNextTile(i)).Single());
-
-                var corner2Positions = corner2.GetRelativePosition(corner1).ToArray();
-                var corner2IsOk = corner2Positions.Contains(corner2.GetRelativePosition(GetPreviousTile(j)).Single())
-                                  && corner2Positions.Contains(corner2.GetRelativePosition(GetNextTile(j)).Single());
-
-                if (corner1IsOk && corner2IsOk)
-                    yield return rectangle;
-            }
-
-        Tile GetPreviousTile(int tileIndex) => tiles[(tileIndex - 1 + tiles.Length) % tiles.Length];
-        Tile GetNextTile(int tileIndex) => tiles[(tileIndex + 1) % tiles.Length];
+                yield return new Rectangle(tiles[i], tiles[j]);
     }
 
     private readonly struct Tile(long x, long y)
     {
         public long X { get; } = x;
         public long Y { get; } = y;
-
-        public IEnumerable<Position> GetRelativePosition(Tile reference)
-        {
-            if (X < reference.X)
-                yield return Position.Left;
-            else if (reference.X < X)
-                yield return Position.Right;
-
-            if (Y < reference.Y)
-                yield return Position.Below;
-            else if (reference.Y < Y)
-                yield return Position.Above;
-        }
 
         public static Tile Parse(string line)
         {
@@ -99,17 +64,20 @@ internal class Day9(bool real) : Day(real)
 
         public long Area => (Top - Bottom + 1) * (Right - Left + 1);
 
-        public bool Contains(Tile tile)
-            => Bottom < tile.Y && tile.Y < Top
-            && Left < tile.X && tile.X < Right;
+        internal bool Intersect(Line line) 
+            => Bottom < line.Top
+               && line.Bottom < Top
+               && Left < line.Right
+               && line.Left < Right;
     }
 
-    private enum Position
+    private class Line(Tile from, Tile to)
     {
-        Same = 0,
-        Above = 1,
-        Below = 2,
-        Left = 4,
-        Right = 8
+        public Tile From { get; } = from;
+        public Tile To { get; } = to;
+        public long Top { get; } = Math.Max(from.Y, to.Y);
+        public long Bottom { get; } = Math.Min(from.Y, to.Y);
+        public long Right { get; } = Math.Max(from.X, to.X);
+        public long Left { get; } = Math.Min(from.X, to.X);
     }
 }
