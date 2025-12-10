@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using AdventOfCode2025.Days;
 
-const bool Real = false;
+const bool Real = true;
 
 Day[] days =
     [
