@@ -33,7 +33,7 @@ internal class Day10(bool real) : Day(real)
 
         public int[] GetOptimalButtonsCombination()
         {
-            for (int combinationLength = 1; combinationLength <= (Buttons.Length*2); combinationLength++)
+            for (int combinationLength = 1; combinationLength <= (Buttons.Length * 2); combinationLength++)
                 foreach (var combination in GetAllButtonsCombinations(combinationLength))
                     if (IsValidButtonCombination(combination))
                         return combination;
@@ -43,14 +43,16 @@ internal class Day10(bool real) : Day(real)
 
         private IEnumerable<int[]> GetAllButtonsCombinations(int combinationLength)
         {
-            for (int firstButton = 0; firstButton < Buttons.Length; firstButton++)
+            int iterationCount = (int)Math.Pow(Buttons.Length, combinationLength);
+            for (int i = 0; i < iterationCount; i++)
             {
                 var combination = new int[combinationLength];
-                combination[0] = firstButton;
-                for (int i = 1; i < combinationLength; i++)
-                    for (int nthButton = 0; nthButton < Buttons.Length; nthButton++)
-                        combination[i] = nthButton;
-
+                for (int j = 0; j < combinationLength; j++)
+                {
+                    var button = (i / (int)Math.Pow(Buttons.Length, j)) % Buttons.Length;
+                    combination[j] = button;
+                }
+                
                 yield return combination;
             }
         }
