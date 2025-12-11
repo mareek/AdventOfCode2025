@@ -11,7 +11,13 @@ internal class Day10(bool real) : Day(real)
     public override string ExecuteFirst()
     {
         var machines = Lines.Select(Machine.Parse).ToArray();
-        throw new NotImplementedException();
+        int answer = 0;
+        foreach (var machine in machines)
+        {
+            var optimalCombination = machine.GetOptimalButtonsCombination();
+            answer += optimalCombination.Length;
+        }
+        return answer.ToString();
     }
 
     public override string ExecuteSecond()
@@ -24,6 +30,40 @@ internal class Day10(bool real) : Day(real)
         public bool[] IndicatorLights { get; } = indicatorLights.Select(c => c == '#').ToArray();
         public int[][] Buttons { get; } = buttons;
         public int[] JoltageRequirements { get; } = joltageRequirements;
+
+        public int[] GetOptimalButtonsCombination()
+        {
+            for (int combinationLength = 1; combinationLength <= (Buttons.Length*2); combinationLength++)
+                foreach (var combination in GetAllButtonsCombinations(combinationLength))
+                    if (IsValidButtonCombination(combination))
+                        return combination;
+
+            throw new Exception("Here be dragons");
+        }
+
+        private IEnumerable<int[]> GetAllButtonsCombinations(int combinationLength)
+        {
+            for (int firstButton = 0; firstButton < Buttons.Length; firstButton++)
+            {
+                var combination = new int[combinationLength];
+                combination[0] = firstButton;
+                for (int i = 1; i < combinationLength; i++)
+                    for (int nthButton = 0; nthButton < Buttons.Length; nthButton++)
+                        combination[i] = nthButton;
+
+                yield return combination;
+            }
+        }
+
+        private bool IsValidButtonCombination(int[] buttonsCombination)
+        {
+            var lightsState = new bool[indicatorLights.Length];
+            foreach (var buttonIndex in buttonsCombination)
+                foreach (var lightIndex in Buttons[buttonIndex])
+                    lightsState[lightIndex] = !lightsState[lightIndex];
+
+            return lightsState.SequenceEqual(IndicatorLights);
+        }
 
         public static Machine Parse(string line)
         {
