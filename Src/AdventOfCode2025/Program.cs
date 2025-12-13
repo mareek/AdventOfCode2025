@@ -14,12 +14,12 @@ Day[] days =
     new Day7(Real),
     new Day8(Real) { Slow = true },
     new Day9(Real),
-    new Day10(Real),
+    new Day10(Real) { Slow = true },
     ];
 
 foreach (var day in days)
 {
-    if (day.Slow)
+    if (Real && day.Slow)
         Console.WriteLine($"Day {day.DayDate:00} : Too slow");
     else
     {
