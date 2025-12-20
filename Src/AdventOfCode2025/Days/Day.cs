@@ -22,10 +22,10 @@ internal abstract class Day
 
     public abstract string ExecuteSecond();
 
-    private static string[] ReadLines(bool real, int day)
+    protected static string[] ReadLines(bool real, int day, int? subDay = null)
     {
         var inputDir = real ? "RealInput" : "TestInput";
-        var filePath = $"{inputDir}\\{day}.txt";
+        var filePath = subDay.HasValue ? $"{inputDir}\\{day}.{subDay}.txt" : $"{inputDir}\\{day}.txt";
         return File.ReadAllLines(filePath);
     }
 

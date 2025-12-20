@@ -32,7 +32,7 @@ internal class Day10(bool real) : Day(real)
                 var chrono = Stopwatch.StartNew();
                 var optimalCombinationLength = machine.GetOptimalButtonsCombinationLengthForJoltage();
                 chrono.Stop();
-                Console.WriteLine($"{machine.GetLights()}\t => {optimalCombinationLength} in {chrono.Elapsed.TotalSeconds:#0.0}s");
+                //Console.WriteLine($"{machine.GetLights()}\t => {optimalCombinationLength} in {chrono.Elapsed.TotalSeconds:#0.0}s");
                 Interlocked.Add(ref answer, optimalCombinationLength);
             });
         }
